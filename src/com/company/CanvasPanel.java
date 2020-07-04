@@ -2,18 +2,15 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class CanvasPanel extends JPanel {
     private Integer[] arr;
-    private static final int SIZE = 150;
+    private static final int SIZE = 190;
     private static final int PADDING = 10;
-    private InsertionSort insertionSort;
+    private Sorter sorter;
 
     public CanvasPanel() {
         arr = new Integer[SIZE];
@@ -21,22 +18,15 @@ public class CanvasPanel extends JPanel {
             arr[i] = i * 5;
         }
 
-        insertionSort = new InsertionSort(this);
+        sorter = new Sorter(this);
     }
 
-    public InsertionSort getInsertionSort() {
-        return insertionSort;
+    public Sorter getSorter() {
+        return sorter;
     }
 
     public Integer[] getArray() {
         return arr;
-    }
-
-    public void shuffleArray() {
-        List<Integer> list = Arrays.asList(arr);
-        Collections.shuffle(list);
-        list.toArray(arr);
-        modelChanged();
     }
 
     public void modelChanged() {
