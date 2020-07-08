@@ -47,9 +47,7 @@ public class Sorter<T extends Comparable<? super T>> {
         lock.unlock();
     }
 
-    public void insertionSort(T[] arr) {
-
-
+    public synchronized void insertionSort(T[] arr) {
         for(int i = 1; i < arr.length; i++) {
             int current = i;
 
@@ -66,7 +64,6 @@ public class Sorter<T extends Comparable<? super T>> {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void selectionSort(T[] arr) {
@@ -148,7 +145,7 @@ public class Sorter<T extends Comparable<? super T>> {
         }
     }
 
-    public void shuffle(T[] arr) {
+    public synchronized void shuffle(T[] arr) {
         List<T> list = Arrays.asList(arr);
         Collections.shuffle(list);
         list.toArray(arr);
