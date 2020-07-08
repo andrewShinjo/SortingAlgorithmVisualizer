@@ -4,8 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Main {
+	static ArrayList<JButton> buttons = new ArrayList<>();
 
     public static void main(String[] args) {
 	    JFrame f = new JFrame("Sorting Algorithm Visualizer");
@@ -17,13 +19,16 @@ public class Main {
 	    JButton selectionSortButton = new JButton("Selection Sort");
 	    JButton heapSortButton = new JButton("Heap Sort");
 	    JButton shuffleButton = new JButton("Shuffle");
-	    JButton mergeSortButton = new JButton("Merge Sort");
+	    buttons.add(insertionSortButton);
+	    buttons.add(bubbleSortButton);
+	    buttons.add(selectionSortButton);
+	    buttons.add(heapSortButton);
+	    buttons.add(shuffleButton);
 	    buttonPanel.add(insertionSortButton);
 	    buttonPanel.add(bubbleSortButton);
 	    buttonPanel.add(selectionSortButton);
+		buttonPanel.add(heapSortButton);
 	    buttonPanel.add(shuffleButton);
-	    buttonPanel.add(heapSortButton);
-	    buttonPanel.add(mergeSortButton);
 	    f.add(panel, BorderLayout.CENTER);
 	    f.add(buttonPanel, BorderLayout.SOUTH);
 	    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +38,18 @@ public class Main {
 	    insertionSortButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				for(JButton button : buttons) {
+					button.setEnabled(false);
+				}
 				panel.getSorter().insertionSort(panel.getArray());
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException interruptedException) {
+					interruptedException.printStackTrace();
+				}
+				for(JButton button : buttons) {
+					button.setEnabled(true);
+				}
 			}
 		});
 
@@ -64,12 +80,17 @@ public class Main {
 				panel.getSorter().heapSort(panel.getArray());
 			}
 		});
-
-		mergeSortButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panel.getSorter().mergeSort(panel.getArray(), 0, panel.getArray().length - 1);
-			}
-		});
     }
+
+    public static void disableAllButtons() {
+    	for(JButton button : buttons) {
+    		button.setEnabled(false);
+		}
+	}
+
+	public static void enableAllButtons() {
+    	for(JButton button : buttons) {
+    		button.setEnabled(true);
+		}
+	}
 }
