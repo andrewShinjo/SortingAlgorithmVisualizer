@@ -48,33 +48,25 @@ public class Sorter<T extends Comparable<? super T>> {
     }
 
     public void insertionSort(T[] arr) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                lock.lock();
-                try {
-                    for(int i = 1; i < arr.length; i++) {
-                        int current = i;
 
-                        while(current > 0 && arr[current - 1].compareTo(arr[current]) > 0) {
-                            T temp = arr[current];
-                            arr[current] = arr[current - 1];
-                            arr[current - 1] = temp;
-                            current--;
-                        }
-                        notifyObserver();
-                        try {
-                            Thread.sleep(25);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                } finally {
-                    lock.unlock();
-                }
 
+        for(int i = 1; i < arr.length; i++) {
+            int current = i;
+
+            while(current > 0 && arr[current - 1].compareTo(arr[current]) > 0) {
+                T temp = arr[current];
+                arr[current] = arr[current - 1];
+                arr[current - 1] = temp;
+                current--;
             }
-        }).start();
+            notifyObserver();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     public void selectionSort(T[] arr) {
@@ -157,14 +149,10 @@ public class Sorter<T extends Comparable<? super T>> {
     }
 
     public void shuffle(T[] arr) {
-        lock.lock();
-        try {
-            List<T> list = Arrays.asList(arr);
-            Collections.shuffle(list);
-            list.toArray(arr);
-            notifyObserver();
-        } finally {
-            lock.unlock();
-        }
+        List<T> list = Arrays.asList(arr);
+        Collections.shuffle(list);
+        list.toArray(arr);
+        notifyObserver();
+        System.out.println("Hello");
     }
 }

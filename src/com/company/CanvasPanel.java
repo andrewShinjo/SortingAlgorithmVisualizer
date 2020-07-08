@@ -30,6 +30,7 @@ public class CanvasPanel extends JPanel {
     }
 
     public void modelChanged() {
+        revalidate();
         repaint();
     }
 
