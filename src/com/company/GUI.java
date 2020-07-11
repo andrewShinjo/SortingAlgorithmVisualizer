@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class GUI {
-    ArrayList<JButton> buttons = new ArrayList<>();
     CanvasPanel panel;
 
     public GUI() {
@@ -15,20 +14,18 @@ public class GUI {
         f.setLayout(new BorderLayout());
         panel = new CanvasPanel();
         JPanel buttonPanel = new JPanel(new GridLayout(1, 0));
-        JButton insertionSortButton = new JButton("Insertion Sort");
         JButton bubbleSortButton = new JButton("Bubble Sort");
-        JButton selectionSortButton = new JButton("Selection Sort");
         JButton heapSortButton = new JButton("Heap Sort");
+        JButton insertionSortButton = new JButton("Insertion Sort");
+        JButton mergeSortButton = new JButton("Merge Sort");
+        JButton selectionSortButton = new JButton("Selection Sort");
+
         JButton shuffleButton = new JButton("Shuffle");
-        buttons.add(insertionSortButton);
-        buttons.add(bubbleSortButton);
-        buttons.add(selectionSortButton);
-        buttons.add(heapSortButton);
-        buttons.add(shuffleButton);
-        buttonPanel.add(insertionSortButton);
         buttonPanel.add(bubbleSortButton);
-        buttonPanel.add(selectionSortButton);
         buttonPanel.add(heapSortButton);
+        buttonPanel.add(insertionSortButton);
+        buttonPanel.add(mergeSortButton);
+        buttonPanel.add(selectionSortButton);
         buttonPanel.add(shuffleButton);
         f.add(panel, BorderLayout.CENTER);
         f.add(buttonPanel, BorderLayout.SOUTH);
@@ -37,10 +34,31 @@ public class GUI {
         f.setVisible(true);
 
         insertionSortButton.addActionListener(new ActionListener() {
-           @Override
+            @Override
             public void actionPerformed(ActionEvent e) {
-               start();
-           }
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        panel.getSorter().insertionSort(panel.getArray());
+                        return null;
+                    }
+                };
+                worker.execute();
+            }
+        });
+
+        mergeSortButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+                    @Override
+                    protected Void doInBackground() throws Exception {
+                        panel.getSorter().mergeSort(panel.getArray(), 0, panel.getArray().length - 1);
+                        return null;
+                    }
+                };
+                worker.execute();
+            }
         });
 
         shuffleButton.addActionListener(new ActionListener() {
@@ -98,16 +116,5 @@ public class GUI {
                 worker.execute();
             }
         });
-    }
-
-    private void start() {
-        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-                panel.getSorter().insertionSort(panel.getArray());
-                return null;
-            }
-        };
-        worker.execute();
     }
 }

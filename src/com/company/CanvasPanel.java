@@ -12,6 +12,9 @@ public class CanvasPanel extends JPanel {
     private static final int PADDING = 10;
     private Sorter sorter;
 
+    /** Constructor for CanvasPanel. The CanvasPanel class draws the array that gets sorted.
+     *
+     */
     public CanvasPanel() {
         arr = new Integer[SIZE];
         for(int i = 0; i < SIZE; i++) {
@@ -21,20 +24,36 @@ public class CanvasPanel extends JPanel {
         sorter = new Sorter(this);
     }
 
+    /** Returns the sorter, which has all the sorting algorithms that
+     * can be applied to the array.
+     *
+     * @return sorter = the sorter
+     */
     public Sorter getSorter() {
         return sorter;
     }
 
+    /** Returns the array that gets sorted.
+     *
+     * @return array = the array that gets sorted
+     */
     public Integer[] getArray() {
         return arr;
     }
 
+    /** Updates the graphics on the panel.
+     *
+     */
     public void modelChanged() {
         revalidate();
         repaint();
     }
 
 
+    /** Visually displays the state of the array in terms of a group of rectangles.
+     *
+     * @param g = the graphics
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
